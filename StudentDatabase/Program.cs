@@ -52,6 +52,7 @@ favorite_food[9] = "Steak";
 
 bool isNextStudent = false;
 bool isTryAgain = false;
+bool isValidNum;
 
 for (int i = 0; i < name.Length; i++)
 {
@@ -61,67 +62,89 @@ for (int i = 0; i < name.Length; i++)
 do
 {
     Console.WriteLine("Pick the number of the Student you would like to know more about");
-    int nameNum = int.Parse(Console.ReadLine()) - 1;
-    if ((nameNum < 0) || (nameNum >= name.Length))
+    isValidNum = int.TryParse(Console.ReadLine(), out int nameNum);
+    // int nameNum = int.Parse(Console.ReadLine()) - 1;
+    
+    if (isValidNum == true)
     {
-        Console.WriteLine("You have entered a number outside the range of the Student Database 1 - 10");
-        Console.WriteLine("Would you like to try Again? (y/n)");
-        string AnotherTry = Console.ReadLine();
-        AnotherTry = AnotherTry.ToLower();
+        nameNum = nameNum - 1;
 
-        if (AnotherTry == "y")
+        if ((nameNum < 0) || (nameNum >= name.Length))
         {
-            isNextStudent = true;
-        }
-        else
-        {
-            isNextStudent = false;
-        }
-    }
-    else
-    {
-        Console.WriteLine(name[nameNum]);
+            Console.WriteLine("You have entered a number outside the range of the Student Database 1 - 10");
+            Console.WriteLine("Would you like to try Again? (y/n)");
+            string AnotherTry = Console.ReadLine();
+            AnotherTry = AnotherTry.ToLower();
 
-        do
-        {
-            Console.WriteLine("Would you like to know more about the Students Hometown or Favorite food?");
-            Console.WriteLine("Enter 'h' for Hometown or 'f' for Favorite Food");
-            string answer = (Console.ReadLine());
-
-            answer = answer.ToLower();
-
-            if (answer == "h" || answer == "hometown")
+            if (AnotherTry == "y")
             {
-                Console.WriteLine(name[nameNum] + " hometown is " + hometown[nameNum]);
-                isTryAgain = false;
-            }
-            else if (answer == "f" || answer == "favorite food")
-            {
-                Console.WriteLine(name[nameNum] + " favorite food is " + favorite_food[nameNum]);
-                isTryAgain = false;
+                isNextStudent = true;
             }
             else
             {
-                Console.WriteLine("You entered an invalid entry -- Try Again? (y/n)");
-                string tryAgain = (Console.ReadLine());
-                tryAgain = tryAgain.ToLower();
+                isNextStudent = false;
+            }
+        }
+        else
+        {
+            Console.WriteLine(name[nameNum]);
 
-                if (tryAgain == "y")
+            do
+            {
+                Console.WriteLine("Would you like to know more about the Students Hometown or Favorite food?");
+                Console.WriteLine("Enter 'h' for Hometown or 'f' for Favorite Food");
+                string answer = (Console.ReadLine());
+
+                answer = answer.ToLower();
+
+                if (answer == "h" || answer == "hometown")
                 {
-                    isTryAgain = true;
+                    Console.WriteLine(name[nameNum] + " hometown is " + hometown[nameNum]);
+                    isTryAgain = false;
+                }
+                else if (answer == "f" || answer == "favorite food")
+                {
+                    Console.WriteLine(name[nameNum] + " favorite food is " + favorite_food[nameNum]);
+                    isTryAgain = false;
                 }
                 else
                 {
-                    isTryAgain = false;
+                    Console.WriteLine("You entered an invalid entry -- Try Again? (y/n)");
+                    string tryAgain = (Console.ReadLine());
+                    tryAgain = tryAgain.ToLower();
+
+                    if (tryAgain == "y")
+                    {
+                        isTryAgain = true;
+                    }
+                    else
+                    {
+                        isTryAgain = false;
+                    }
                 }
+            } while (isTryAgain);
+
+            Console.WriteLine("Would you like to learn about another Student? (y/n)");
+            string nextStudent = Console.ReadLine();
+            nextStudent = nextStudent.ToLower();
+
+            if (nextStudent == "y")
+            {
+                isNextStudent = true;
             }
-        } while (isTryAgain);
+            else
+            {
+                isNextStudent = false;
+            }
+        } 
+    } 
+    else
+    { 
+        Console.WriteLine("You have entered an invalid entry! Would you like to try again? (y/n)");
+        string anotherTry = Console.ReadLine();
+        anotherTry = anotherTry.ToLower();
 
-        Console.WriteLine("Would you like to learn about another Student? (y/n)");
-        string nextStudent = Console.ReadLine();
-        nextStudent = nextStudent.ToLower();
-
-        if (nextStudent == "y")
+        if (anotherTry == "y")
         {
             isNextStudent = true;
         }
@@ -130,4 +153,4 @@ do
             isNextStudent = false;
         }
     }
-} while (isNextStudent) ;
+} while (isNextStudent);
